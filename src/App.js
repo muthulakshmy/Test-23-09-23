@@ -14,7 +14,7 @@ function App() {
   const getData = () => {
     axios.get(`http://localhost:3030/posts`)
       .then((response) => setPosts(response.data))
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log("error", error))
   }
   
   const postData = () => {
@@ -26,6 +26,7 @@ function App() {
         setPosts(posts.map(post => post.id === editId ? { ...post, title, body } : post));
         setEditId(null);
       })
+      .catch((error) => console.error("Error message : ",error.message))
     } else {
       
       axios.post('http://localhost:3030/posts', {
@@ -36,10 +37,8 @@ function App() {
           .then(() => {
         getData()
       })
-
+      .catch((error) => console.error("Error message : ",error.message))
     }
-    
- 
     setTitle('')
     setBody('')
   }
@@ -67,7 +66,8 @@ function App() {
     .then(() => {
       
         getData()
-      });
+      })
+    .catch((error) => console.error("Error message : ",error.message))
   }
 
   return (
