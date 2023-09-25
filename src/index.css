@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./bkj.jpg");
+  background-size: 1300px;
+ 
 }
 
 code {
@@ -13,12 +16,55 @@ code {
 }
 .text_div{
   display: flex;
+  
   flex-direction: column;
-
+  width: 500px;
+  text-align: center;
+  margin-left: 350px;
+  background-color: lavender;
+  margin-bottom: 20px;
+ 
 }
 input{
   width: 300px;
+  margin: 10px;
 }
 .button_div{
   display: flex;
+  justify-content: center;
+}
+button{
+  width:100px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color:rgb(122, 85, 149);
+  color:rgb(219, 212, 224);
+  border-radius: 5px;
+  border: none;
+  margin-left: 5px;
+
+}
+.button_update{
+  background-color: rgb(209, 103, 103);
+}
+.button_add{
+  background-color: rgb(103, 191, 103);
+}
+.add{
+  background-color: rgb(89, 89, 157);
+}
+.display_div{
+ 
+  border: 1px solid rgb(0, 0, 0);
+  width: 300px;
+  margin-left: 490px;
+  background-color: white;
+  
+}
+.color{
+  display:grid;
+  gap:10px;
+
+
 }

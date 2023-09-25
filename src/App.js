@@ -9,7 +9,7 @@ function App() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [popup, setPopup] = useState(false);
-  const [editid, seteditid] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   const getData = () => {
     axios.get(`http://localhost:3030/posts`)
@@ -18,32 +18,25 @@ function App() {
   }
   
   const postData = () => {
-    if (editid) {
-      axios({
-        method: 'put',
-        url: `http://localhost:3030/posts/${editid}`,
-        data: {
-          title: title,
-          body: body
-        }
-      }).then(() => {
-        
-        setPosts(posts.map(post => post.id === editid ? { ...post, title, body } : post));
-        seteditid(null);
-      });
+    setPopup(false)
+    if (editId) {
+     
+      axios.put(`http://localhost:3030/posts/${editId}`,{ title:title,body:body})
+      .then(()=>{
+        setPosts(posts.map(post => post.id === editId ? { ...post, title, body } : post));
+        setEditId(null);
+      })
     } else {
       
-      axios({
-        method: 'post',
-        url: 'http://localhost:3030/posts',
-        data: {
-          id: Date.now(),
-          title: title,
-          body: body
-        }
-      }).then(() => {
+      axios.post('http://localhost:3030/posts', {
+            id: Date.now(),
+            title: title,
+            body: body
+          })
+          .then(() => {
         getData()
       })
+
     }
     
  
@@ -57,29 +50,30 @@ function App() {
 
   function addTask() {
     setPopup(true);
-    seteditid(null)
+    setEditId(null)
   }
 
   function editTask(id, title, body) {
     setPopup(true)
-    seteditid(id)
+    setEditId(id)
     setTitle(title)
     setBody(body)
   }
 
 
   function deleteTask(id) {
-    axios({
-      method: 'delete',
-      url: `http://localhost:3030/posts/${id}`,
-    }).then(() => {
-      setPosts(posts.filter(post => post.id !== id));
-    });
+   
+    axios.delete(`http://localhost:3030/posts/${id}`)
+    .then(() => {
+      
+        getData()
+      });
   }
 
   return (
     <div className="App">
-      <button onClick={addTask}>Add +</button>
+      
+      <button onClick={addTask} className='add'>Add +</button>
       {popup && (
         <div className='text_div'>
           <label>
@@ -88,14 +82,14 @@ function App() {
           </label>
           <label>
             Body:
-            <input type="text" required value={body} onChange={(e) => setBody(e.target.value)} />
+            <input type="text"required value={body} onChange={(e) => setBody(e.target.value)} />
           </label>
           <div className='button_div'>
-            {editid ?(
-              <button onClick={postData}>Update</button>
+            {editId ?(
+              <button onClick={postData} className='button_update'>Update</button>
             ):
             (
-              <button onClick={postData}>Add</button>
+              <button onClick={postData} className='button_add'>Add</button>
             )
 
             }
@@ -105,15 +99,16 @@ function App() {
         </div>
       )}
 
-      <div>
+      <div className='color'>
         {posts.map((post) => (
-          <div key={post.id}>
+          <div key={post.id} className='display_div'>
             <h3>
-              <span>{post.id}</span> {post.title}
+               {post.title}
             </h3>
             <p>{post.body}</p>
             <button onClick={() => editTask(post.id, post.title, post.body)}>Edit</button>
             <button onClick={() => deleteTask(post.id)}>Delete</button>
+            <br/>
           </div>
         ))}
       </div>

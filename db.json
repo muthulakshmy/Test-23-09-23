@@ -1,3 +1,14 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "title": "hello",
+      "body": "malay",
+      "id": 1695617216067
+    },
+    {
+      "id": 1695618614262,
+      "title": "add",
+      "body": "add4"
+    }
+  ]
 }
